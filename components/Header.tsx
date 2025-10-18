@@ -24,13 +24,10 @@ const Header: React.FC = () => {
                 <NavLink
                   key={link.name}
                   to={link.path}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-                      isActive
-                        ? 'bg-primary text-white'
-                        : 'text-gray-700 hover:bg-primary/20'
-                    }`
-                  }
+                  {/* Fix: Updated NavLink for react-router-dom v5 compatibility */}
+                  exact={link.path === '/'}
+                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 text-gray-700 hover:bg-primary/20"
+                  activeClassName="bg-primary text-white"
                 >
                   {link.name}
                 </NavLink>
@@ -64,11 +61,11 @@ const Header: React.FC = () => {
               >
                 <span className="sr-only">Open main menu</span>
                 {isMenuOpen ? (
-                  <svg className="block h-6 w-6" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
-                  <svg className="block h-6 w-6" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                   </svg>
                 )}
@@ -84,13 +81,10 @@ const Header: React.FC = () => {
                 key={link.name}
                 to={link.path}
                 onClick={() => setIsMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 ${
-                    isActive
-                      ? 'bg-primary text-white'
-                      : 'text-gray-700 hover:bg-primary/20'
-                  }`
-                }
+                {/* Fix: Updated NavLink for react-router-dom v5 compatibility */}
+                exact={link.path === '/'}
+                className="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 text-gray-700 hover:bg-primary/20"
+                activeClassName="bg-primary text-white"
               >
                 {link.name}
               </NavLink>

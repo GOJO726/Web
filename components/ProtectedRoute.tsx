@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+// Fix: Replaced Navigate with Redirect for react-router-dom v5 compatibility.
+import { Redirect, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -11,7 +12,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     const location = useLocation();
 
     if (!user) {
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        // Fix: Replaced Navigate component with Redirect for v5.
+        return <Redirect to={{ pathname: "/login", state: { from: location } }} />;
     }
 
     return children;

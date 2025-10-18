@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
+// Fix: Replaced Routes with Switch for react-router-dom v5 compatibility.
+import { HashRouter, Switch, Route, useLocation, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
@@ -15,6 +16,7 @@ import Quiz from './components/Quiz';
 import { AuthProvider } from './contexts/AuthContext';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -70,20 +72,37 @@ const App: React.FC = () => {
           <Header />
           <main className="flex-grow">
             <AdBanner type="header" />
-            <Routes>
-              <Route path="/" element={<HomePage projects={projects} />} />
-              <Route path="/learn" element={<LearningPath />} />
-              <Route path="/projects" element={<ProjectGallery projects={projects} />} />
-              <Route path="/quiz" element={<Quiz />} />
-              <Route path="/design" element={<CircuitDesigner />} />
-              <Route path="/code" element={<CodeEditor />} />
-              <Route path="/publish" element={
-                <ProtectedRoute>
-                  <PublishProject onPublish={handlePublishProject} />
-                </ProtectedRoute>
-              } />
-              <Route path="/login" element={<Login />} />
-            </Routes>
+            <ErrorBoundary>
+              {/* Fix: Replaced Routes with Switch and updated Route syntax for v5 */}
+              <Switch>
+                <Route exact path="/">
+                  <HomePage projects={projects} />
+                </Route>
+                <Route exact path="/learn">
+                  <LearningPath />
+                </Route>
+                <Route exact path="/projects">
+                  <ProjectGallery projects={projects} />
+                </Route>
+                <Route exact path="/quiz">
+                  <Quiz />
+                </Route>
+                <Route exact path="/design">
+                  <CircuitDesigner />
+                </Route>
+                <Route exact path="/code">
+                  <CodeEditor />
+                </Route>
+                <Route exact path="/publish">
+                  <ProtectedRoute>
+                    <PublishProject onPublish={handlePublishProject} />
+                  </ProtectedRoute>
+                </Route>
+                <Route exact path="/login">
+                  <Login />
+                </Route>
+              </Switch>
+            </ErrorBoundary>
           </main>
           <AdBanner type="footer" />
           <Footer />

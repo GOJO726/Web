@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+// Fix: Replaced useNavigate with useHistory for react-router-dom v5 compatibility.
+import { useHistory, Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { RoboLearnLogo } from './IconComponents';
 
@@ -7,14 +8,16 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
+  // Fix: Switched from useNavigate to useHistory.
+  const history = useHistory();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Basic validation
     if (email && password) {
       login(email);
-      navigate('/');
+      // Fix: Updated navigation method to history.push.
+      history.push('/');
     }
   };
 
